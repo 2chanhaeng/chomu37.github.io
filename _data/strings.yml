@@ -43,8 +43,10 @@ cookies_banner:
 not_found:
   title:               '404: Page Not Found'
   message:             |
-    Sorry, we've misplaced that URL or it's pointing to something that doesn't exist.
+    Upsie-daisy! Nothing to find!
     <!--home_link--> to try finding it again.
+    ![](kashiwakashiwakashiwakashiwakashiwakashiwakashiwakashiwakashiwa.png)
+
   home_link:           Head back home
 
 error:
