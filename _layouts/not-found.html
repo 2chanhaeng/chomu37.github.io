@@ -34,9 +34,11 @@ layout: base
   {% else %}
     {% capture home_link %}<a href="{{ '/' | relative_url }}">{{ strings.not_found.home_link | default:"Head back home" }}</a>{% endcapture %}
     {% assign text = strings.not_found.message
-      | default:"Sorry, we've misplaced that URL or it's pointing to something that doesn't exist. <!--home_link--> to try finding it again." %}
+      | default:"Sorry, we've misplaced that URL or it's pointing to something that doesn't exist. <!--home_link--> to try finding it again.![](kashiwakashiwakashiwakashiwakashiwakashiwakashiwakashiwakashiwa.png)" %}
     <p class="lead">
       {{ text | replace:"<!--home_link-->", home_link }}
     </p>
+    Upsie-daisy! Nothing to find!
+    <!--home_link--> to try finding it again.
   {% endif %}
 </div>
