@@ -2,8 +2,7 @@
 layout: post
 title: Hello, World!
 description: >
-  gitignore에 꼭 venv를 추가해야 하나요? >> 네. //
-  그렇다면 어떻게 관리해야하나요? >> pip의 freeze와 -r 을 이용합니다.
+  gitignore에 꼭 venv를 추가해야 하나요? >> 네. 대신 pip의 freeze와 -r 을 이용합니다.
 tags: 
 ---
 # gitignore에 꼭 venv를 추가해야 하나요?
