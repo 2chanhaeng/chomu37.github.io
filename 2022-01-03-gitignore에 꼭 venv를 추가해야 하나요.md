@@ -1,8 +1,8 @@
 ---
 layout: post
-title: Hello, World!
+title: gitignore에 꼭 venv를 추가해야 하나요?
 description: >
-  gitignore에 꼭 venv를 추가해야 하나요? >> 네. 대신 pip의 freeze와 -r 을 이용합니다.
+  gitignore에 꼭 venv를 추가해야 하나요? >> 네. 대신 pip의 freeze와 install -r 을 이용합니다.
 tags: 
 ---
 # gitignore에 꼭 venv를 추가해야 하나요?
@@ -14,13 +14,14 @@ tags:
  A2. `pip`의 `freeze`와 `-r` 명령어를 이용합니다.
   1. 터미널에서 가상 환경을 실행합니다.
   ```bash
-  venv\\Scripts\\activate 
+  & "venv\Scripts\activate"
   ```
   
   2. `pip freeze` 명령어로 `requirements.txt` 문서에 현재 설치된 모듈 및 라이브러리의 정보를 저장합니다.
   ```bash
   pip freeze > requirements.txt
   ```
+  > 파일 이름은 꼭 `requirements.txt` 이 아니어도 되나 통상적으로 사용한다.
   
   3. commit 및 push 합니다.
   ```bash
@@ -37,7 +38,7 @@ tags:
   git pull
   ```
 
-  5. `pip -r` 명령어를 이용해 `requirements.txt` 문서에 작성된 모듈 및 라이브러리를 설치합니다.
+  5. `pip install -r` 명령어를 이용해 `requirements.txt` 문서에 작성된 모듈 및 라이브러리를 설치합니다.
   ```bash
-  pip -r requirements.txt
+  pip install -r requirements.txt
   ```
