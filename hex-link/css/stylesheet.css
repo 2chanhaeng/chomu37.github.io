@@ -16,21 +16,20 @@
     clip-path: circle(50% at 50% 50%);
     width: var(--hexagon-width);
     height: var(--hexagon-width);
-    color: #fff;
-    text-align: center;
-    vertical-align: baseline;
-    font-family: sans-serif, "Helvetica Neue", Helvetica, Arial;
 }
-
+#mixAllHex + label > p, #cancelAllCheckedCheckbox + label > p{
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-family: sans-serif, "Helvetica Neue", Helvetica, Arial;
+    font-size: calc(var(--hexagon-width) * 0.3);
+}
 #cancelAllCheckedCheckbox + label{
     bottom: calc(var(--hexagon-width) * 0.6);
     background-color: red;
-    font-size: calc(var(--hexagon-width) * 0.3);
 }
 #mixAllHex + label{
     bottom: calc(var(--hexagon-width) * 1.7);
     background-color: green;
-    font-size: calc(var(--hexagon-width) * 0.5);
 }
 
 p {

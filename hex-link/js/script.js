@@ -1,5 +1,8 @@
 "use strict";
 
+const url = new URL(window.location.href);
+const isDebug = url.searchParams.get('debug') == 'true';
+console.log(isDebug);
 // 3~63이 랜덤으로 나오는 함수
 function rand64(){
     return Math.floor(Math.random() * 61) + 3;
@@ -55,9 +58,22 @@ function changeHex(list, obj){
 
 // 
 function writeHexes(obj){
-    null;
-}
+    if(isDebug){
 
+        // 오브젝트에서 key를 뽑아 해당 key를 id로 가지는 요소의 center 클래스에 p 요소에 값을 대입해서 기존 내용에 추가
+        for (let id in obj){
+            let hexCenter = document.querySelector(`#${id} .center`)
+            // 만약 이미 p 태그가 있다면 삭제
+            if(hexCenter.querySelector('p')){
+                hexCenter.querySelector('p').remove();
+            }
+            let p = document.createElement("p")
+            p.textContent = obj[id];
+    
+            hexCenter.appendChild(p);
+        }
+    }   
+}
 function displayPipes(obj){
     for (let id in obj){
         let hexCenter = document.querySelector(`#${id} .center`)
@@ -93,21 +109,24 @@ idList.forEach(id => {
         let center = this.querySelector('.center');
         let hexagon = center.querySelector('.hexagon');
         hexagon.style.backgroundColor = '#00ff00';
-        let connects = connectingCable[id];
-        for(const connected in connects){
-            let connectedHex = document.querySelector(`#${connected} .hexagon`);
-            connectedHex.style.backgroundColor = '#ff00ff';
+        if(isDebug){
+            let connects = connectingCable[id];
+            for(const connected in connects){
+                let connectedHex = document.querySelector(`#${connected} .hexagon`);
+                connectedHex.style.backgroundColor = '#ff00ff';
+            }
         }
     }, false);
     hex.addEventListener('mouseout', function(){
         let center = this.querySelector('.center');
         let hexagon = center.querySelector('.hexagon');
         hexagon.style.backgroundColor = "";
-        
-        let connects = connectingCable[id];
-        for(const connected in connects){
-            let connectedHex = document.querySelector(`#${connected} .hexagon`);
-            connectedHex.style.backgroundColor = "";
+        if(isDebug){
+            let connects = connectingCable[id];
+            for(const connected in connects){
+                let connectedHex = document.querySelector(`#${connected} .hexagon`);
+                connectedHex.style.backgroundColor = "";
+            }
         }
     }, false);
     let checkbox = hex.querySelector('input[type="checkbox"]');
