@@ -1,0 +1,188 @@
+#score{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 10vh;
+    font-weight: bold;
+    text-align: right;
+    margin-top: 10px;
+}
+p {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: normal;
+    font-size: 3vh;
+    position: absolute;
+    margin: 0 0 0 0;
+    transform: inherit;
+    top: 50%;
+    left: 50%;
+    z-index: 2;
+}
+.pipe {
+    position: relative;
+    margin: 0 0 0 0;
+    height: calc(var(--hexagon-width)/5);/*var(--hexagon-diagonal);*/
+    width: var(--hexagon-width);
+    top: calc((var(--hexagon-height) - var(--hexagon-width)/5)/2);
+    /* transform: rotate(120deg); */
+    clip-path: polygon(49% 0%, 100% 0%, 100% 100%, 49% 100%);
+    background-color: var(--btn-checked-color);
+    position: absolute;
+    z-index: 1;
+    display: none;
+}
+.u {
+    transform: rotate(60deg);
+}
+.v {
+    transform: rotate(120deg);
+}
+.w {
+    transform: rotate(180deg);
+}
+.x {
+    transform: rotate(240deg);
+}
+.y {
+    transform: rotate(300deg);
+}
+input[type="checkbox"]:checked + .center .pipe{
+    background-color: var(--btn-color);
+}
+input[type="checkbox"]{
+    display: none;
+}
+input[type="checkbox"] + .center{
+    --bg-color: var(--btn-color);
+}
+input[type="checkbox"]:checked + .center{
+    --bg-color: var(--btn-checked-color);
+}
+.hexagon {
+    width: var(--hexagon-width);
+    height: var(--hexagon-height);
+    border-radius: var(--hexagon-border-radius);
+    transition: transform 400ms ease;
+    background-color: var(--bg-color);
+}
+.hexagon:before, .hexagon:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: inherit;
+    height: inherit;
+    background-color: inherit;
+    border-radius: inherit;
+}
+.hexagon:before {
+    transform: rotate(60deg);
+}
+.hexagon:after {
+    transform: rotate(-60deg);
+}
+.center {
+    position: fixed;
+    transform: translate(-50%, -50%);
+}
+
+/* top */
+#a .center, #b .center, #c .center{
+    top:  calc(var(--y-center) + var(--relative-y-of-abc));
+}
+#d .center, #e .center, #f .center, #g .center{
+    top:  calc(var(--y-center) + var(--relative-y-of-defg));
+}
+#h .center, #i .center, #j .center, #k .center, #l .center{
+    top:  calc(var(--y-center) + var(--relative-y-of-hijkl));
+}
+#m .center, #n .center, #o .center, #p .center{
+    top:  calc(var(--y-center) + var(--relative-y-of-mnop));
+}
+#q .center, #r .center, #s .center{
+    top:  calc(var(--y-center) + var(--relative-y-of-qrs));
+}
+
+/* left */
+#h .center{
+    left:  calc(var(--x-center) + var(--relative-x-of-h));
+}
+#d .center, #m .center{
+    left:  calc(var(--x-center) + var(--relative-x-of-dm));
+}
+#a .center, #i .center, #q .center{
+    left:  calc(var(--x-center) + var(--relative-x-of-aiq));
+}
+#e .center, #n .center{
+    left:  calc(var(--x-center) + var(--relative-x-of-en));
+}
+#b .center, #j .center, #r .center{
+    left:  calc(var(--x-center) + var(--relative-x-of-bjr));
+}
+#f .center, #o .center{
+    left:  calc(var(--x-center) + var(--relative-x-of-fo));
+}
+#c .center, #k .center, #s .center{
+    left:  calc(var(--x-center) + var(--relative-x-of-cks));
+}
+#g .center, #p .center{
+    left:  calc(var(--x-center) + var(--relative-x-of-gp));
+}
+#l .center{
+    left:  calc(var(--x-center) + var(--relative-x-of-l));
+}
+
+:root{
+    --hexagon-height: 10vh;
+    --hexagon-width: calc(var(--hexagon-height) * 1.55);
+    --hexagon-border-radius: calc(var(--hexagon-width) / 10);
+    --hexagon-diagonal: calc(var(--hexagon-height) * 1.843);
+    
+    --x-center: 50vw;
+    --y-center: 50vh;
+    --x-space: calc(var(--hexagon-width) / 20);
+    --y-space: calc(2 / 1.73 * var(--x-space));
+
+    --relative-x-of-h:   calc(-1 * var(--relative-x-of-l));
+    --relative-x-of-dm:  calc(-1 * var(--relative-x-of-gp));
+    --relative-x-of-aiq: calc(-1 * var(--relative-x-of-cks));
+    --relative-x-of-en:  calc(-1 * var(--relative-x-of-fo));
+    --relative-x-of-bjr:      0vw;                 /* b */
+    --relative-x-of-fo:  calc(1 * var(--15w-1xs)); /* b-< <==f */
+    --relative-x-of-cks: calc(2 * var(--15w-1xs)); /* b==> >-f-< <==c */
+    --relative-x-of-gp:  calc(3 * var(--15w-1xs)); /* b-< <==f==> >-c-< <==g */
+    --relative-x-of-l:   calc(4 * var(--15w-1xs)); /* j==> >-f-< <==k==> >-g-< <==l */
+    --15w-1xs: calc(0.5 * var(--hexagon-width) + var(--x-space));
+
+    --relative-y-of-abc:  calc(-1 * var(--relative-y-of-qrs));
+    --relative-y-of-defg: calc(-1 * var(--relative-y-of-mnop));
+    --relative-y-of-hijkl:     0vh;
+    --relative-y-of-mnop: calc(1 * var(--15h));
+    --relative-y-of-qrs:  calc(2 * var(--15h));
+    --15h: calc(1.5 * var(--hexagon-height));
+}
+@media (prefers-color-scheme: light) {
+    :root{
+        --btn-color: #00ffff;
+        --btn-checked-color: #ff0000;
+    }
+    h1,h2,h3,p {
+        color: #000;
+    }
+    body {
+        background-color: #ffffff;
+    }
+}
+@media (prefers-color-scheme: dark) {
+    :root{
+        --btn-color: #ffff00;
+        --btn-checked-color: #0000ff;
+    }
+    h1,h2,h3,p {
+        color: #fff;
+    }
+    body {
+        background-color: #000000;
+    }
+}
