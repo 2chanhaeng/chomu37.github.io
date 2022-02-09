@@ -5,6 +5,34 @@
     text-align: right;
     margin-top: 10px;
 }
+
+#mixAllHex, #cancelAllCheckedCheckbox{
+    display: none;
+}
+
+#mixAllHex + label, #cancelAllCheckedCheckbox + label{
+    position: absolute;
+    right: calc(var(--hexagon-width) * 0.6);
+    clip-path: circle(50% at 50% 50%);
+    width: var(--hexagon-width);
+    height: var(--hexagon-width);
+    color: #fff;
+    text-align: center;
+    vertical-align: baseline;
+    font-family: sans-serif, "Helvetica Neue", Helvetica, Arial;
+}
+
+#cancelAllCheckedCheckbox + label{
+    bottom: calc(var(--hexagon-width) * 0.6);
+    background-color: red;
+    font-size: calc(var(--hexagon-width) * 0.3);
+}
+#mixAllHex + label{
+    bottom: calc(var(--hexagon-width) * 1.7);
+    background-color: green;
+    font-size: calc(var(--hexagon-width) * 0.5);
+}
+
 p {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: normal;
@@ -134,7 +162,7 @@ input[type="checkbox"]:checked + .center{
 }
 
 :root{
-    --hexagon-height: 10vh;
+    --hexagon-height: min(10vh,10vw);
     --hexagon-width: calc(var(--hexagon-height) * 1.55);
     --hexagon-border-radius: calc(var(--hexagon-width) / 10);
     --hexagon-diagonal: calc(var(--hexagon-height) * 1.843);
