@@ -2,16 +2,16 @@
 
 const url = new URL(window.location.href);
 const isDebug = url.searchParams.get('debug') == 'true';
-console.log(isDebug);
 // 3~63이 랜덤으로 나오는 함수
 function rand64(){
     return Math.floor(Math.random() * 61) + 3;
 }
 
+const banned = new Set([0, 4, 8, 16, 32,/*1*/ 3, 5, 9, 17, 33,/*2*/ 6, 10, 18, 34,/*4*/ 12, 20, 36,/*8*/ 24, 40,/*16*/ 48]);
 // 0, 4, 8, 16, 32 가 아닌 수가 나올 때까지 반복
 function getNew(){
     let result = 0
-    while(result == 0 || result == 4 || result == 8 || result == 16 || result == 32){
+    while(banned.has(result)){
         result = rand64();
     }
     return result;
@@ -135,9 +135,9 @@ idList.forEach(id => {
         if(checkedHexes.includes(id)){
             // 첫 요소 혹은 마지막 요소일 경우에만 체크 취소 가능
                 if(checkedHexes.indexOf(id) == 0){
-                checkedHexes.splice(0);
+                checkedHexes.shift();
             }else if(checkedHexes.indexOf(id) == checkedHexes.length - 1){
-                checkedHexes.splice(checkedHexes.length - 1);
+                checkedHexes.pop();
             }else{
                 // 첫 원소도, 마지막 원소도 아니면 checkbox의 checked 상태 유지
                 checkbox.checked = true;
@@ -154,15 +154,19 @@ idList.forEach(id => {
                 checkbox.checked = false;
             }
             if(isRinged(checkedHexes)){
-                console.log(checkedHexes);
+                if(isDebug){console.log(checkedHexes);}
                 checkedHexes.forEach(function(id){
                     hexes[id] = getNew();
                 });
                 scoreUp(checkedHexes);
-                mixHexes(hexes);
+                if(isCycled()){
+                    mixHexes();
+                }else{
+                    mixAllHex();
+                }
             };
         }
-        console.log(checkedHexes);
+        if(isDebug){console.log(checkedHexes);}
     }, false);
 });
 
@@ -209,12 +213,58 @@ function mixHexes(list = hexes){
     writeHexes(list);
     displayPipes(list);
 }
-mixHexes(hexes);
-scoreUp([]);
 
 function mixAllHex(){
     cancelAllCheckedCheckbox();
-    hexes = idList.reduce((acc,curr) => (acc[curr] = getNew(), acc), {});
+    for(let i = 0; i < 100; i++){
+        hexes = idList.reduce((acc,curr) => (acc[curr] = getNew(), acc), {});
+        connectingTable = makeConnectingTable(connectingCable);
+        if(isCycled()){break;}
+    }
     writeHexes(hexes);
     displayPipes(hexes);
 }
+
+function makeConnectingTable(obj = connectingCable){
+    let result = {};
+    for(const id in obj){
+        result[id] = [];
+        let connects = obj[id];
+        for(const connected in connects){
+            if(isConnected(id, connected)){
+                result[id].push(connected);
+            }
+        };
+    };
+    return result;
+}
+
+let connectingTable = makeConnectingTable(connectingCable);
+
+function isCycled(obj = connectingTable){
+    let ersead = 1;
+    while(ersead != 0){
+        ersead = 0;
+        for(const id in obj){
+            if(obj[id].length <= 1){
+                ersead += 1;
+                for(const id2 in obj){
+                    if(obj[id2].includes(id)){
+                        obj[id2].splice(obj[id2].indexOf(id), 1);
+                    }
+                }
+                delete obj[id];
+            }
+        }
+    }
+    length = 0;
+    for(const id in obj){length += obj[id].length};
+    if(isDebug){console.log(obj);}
+    return length > 2;
+}
+
+function start(){
+    mixAllHex();
+    scoreUp([]);
+}
+start()
