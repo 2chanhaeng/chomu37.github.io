@@ -8,7 +8,14 @@
     <link rel="stylesheet" href="css/stylesheet.css">
 </head>
 <body>
-    <h1 id="score"></h1>
+    <div id="controls">
+        <h1 id="score"></h1>
+
+        <input type="button" id="mixAllHex" value="mixAllHex" onclick="mixAllHex()">
+        <label for="mixAllHex"><p>Mix</p></label>
+        <input type="button" id="cancelAllCheckedCheckbox" value="cancelAllCheckedCheckbox" onclick="cancelAllCheckedCheckbox()">
+        <label for="cancelAllCheckedCheckbox"><p>Cancel</p></label>
+    </div>
     <div class="cell" id="a">
         <input type="checkbox" id="acheckbox">
         <label class="center" for="acheckbox">
@@ -237,10 +244,6 @@
             <div class="hexagon"></div>
         </label>
     </div>
-    <input type="button" id="mixAllHex" value="mixAllHex" onclick="mixAllHex()">
-    <label for="mixAllHex"><p>Mix</p></label>
-    <input type="button" id="cancelAllCheckedCheckbox" value="cancelAllCheckedCheckbox" onclick="cancelAllCheckedCheckbox()">
-    <label for="cancelAllCheckedCheckbox"><p>Cancel</p></label>
     <script src="js/script.js"></script>
 </body>
 </html>

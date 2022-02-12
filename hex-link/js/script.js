@@ -54,9 +54,6 @@ function changeHex(list, obj){
     }
 }
 
-// changeHex(idList, hexes)
-
-// 
 function writeHexes(obj){
     if(isDebug){
 
@@ -74,6 +71,7 @@ function writeHexes(obj){
         }
     }   
 }
+
 function displayPipes(obj){
     for (let id in obj){
         let hexCenter = document.querySelector(`#${id} .center`)
@@ -158,6 +156,7 @@ idList.forEach(id => {
                 checkedHexes.forEach(function(id){
                     hexes[id] = getNew();
                 });
+                connectingTable = makeConnectingTable(connectingCable);
                 scoreUp(checkedHexes);
                 if(isCycled()){
                     mixHexes();
@@ -267,4 +266,5 @@ function start(){
     mixAllHex();
     scoreUp([]);
 }
+
 start()
