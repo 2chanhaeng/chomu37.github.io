@@ -71,11 +71,6 @@ vertexList.forEach(id => {
     }
 });
 
-function forBoundaryCell(id, callback){
-    callback(id);
-    if(sideList.includes(id)){callback(`pesudo-${id}`);}
-    else if(vertexList.includes(id)){for(let i = 0; i < 2; i++){callback(`pesudo-${id}${i}`);}}
-}
 
 const connectingCable = {
     "a": {"b":1, "r":2, "q":4, "l":8, "d":16, "e":32},
@@ -136,7 +131,6 @@ function displayAllCellPipe(obj){
 }
 
 function displayPipes(id, value){
-    console.log(document.querySelector(`#${id} .center`).childNodes);
     document.querySelector(`#${id} .center`).childNodes.forEach(hexagon => {
         hexagon.querySelectorAll('.pipe').forEach(pipe => pipe.style.display = '');
         paraByCase(value,function(a){hexagon.querySelector(a).style.display = 'block';},'.z','.y','.x','.w','.v','.u',null);
@@ -228,6 +222,12 @@ idList.forEach(id => {
                     hexes[id] = getNew();
                 });
                 connectingTable = makeConnectingTable(connectingCable);
+
+                bellSound.currentTime = 0;
+                bellSound.play();
+                setTimeout(() => {bellSound.pause()} , 1000);
+                vibrate();
+
                 scoreUp(checkedHexes);
                 if(isCycled()){
                     mixHexes();
@@ -239,6 +239,10 @@ idList.forEach(id => {
         if(isDebug){console.log(checkedHexes);}
     }, false);
 });
+
+const bellSoundUrl = url.hostname=="chomu37.github.io" ? './static/sound/bell.mp3' : 'https://chomu37.github.io/hex-link/static/sound/bell.mp3';
+const bellSound = new Audio(bellSoundUrl);
+bellSound.loop = false;
 
 function isConnected(current, next){
     if(isConnectable(current, next)){
@@ -267,6 +271,14 @@ function scoreUp(list){
     score += list.length ** 2;
     let scoreElement = document.querySelector('#score');
     scoreElement.innerHTML = score;
+}
+
+navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate; 
+
+function vibrate(){
+    if (navigator.vibrate) {
+        navigator.vibrate(300); // unit: ms
+    }
 }
 
 // 모든 체크박스의 체크 상태를 취소합니다.
