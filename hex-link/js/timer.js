@@ -3,29 +3,26 @@
 // make timer
 const svgns = "http://www.w3.org/2000/svg";
 
-const timer = document.createElementNS(svgns, 'svg');
-for(const [attribute, value] of Object.entries({"id": "timer", "viewBox": "0 0 100 100"})){
-    timer.setAttribute(attribute, value);
+Element.prototype.setAttributes = function (attrs){
+    for(let key in attrs){
+        this.setAttribute(key, attrs[key]);
+    }
 }
 
-timer.setAttribute('id', 'timer');
-const timerBG = document.createElementNS(svgns, 'circle');
-for(const [attribute, value] of Object.entries({"cx": "50", "cy": "50", "r": "50"})){
-    timerBG.setAttribute(attribute, value);
-}
+const timer = document.createElementNS(svgns, 'svg');
+timer.setAttributes({"id": "timer", "viewBox": "0 0 100 100", "class": "timer"});
+
+const timerBG = document.createElementNS(svgns, 'path');
+timerBG.setAttributes({'id': 'timerBG'});
 
 const timerHand = document.createElementNS(svgns, 'path');
-for(const [attribute, value] of Object.entries({"fill": "none", "stroke-linecap": "round", "stroke-width": "10", "stroke": "#fff", "stroke-dasharray": "250,250", "d": "M50 10\n a 40 40 0 0 1 0 80\n a 40 40 0 0 1 0 -80"})){
-    timerHand.setAttribute(attribute, value);
-}
+timerHand.setAttributes({'id': 'timerHand', "stroke-dasharray": "250,250"});
 
 const timerText = document.createElementNS(svgns, 'text');
-for(const [attribute, value] of Object.entries({"x": "50" , "y": "50", "text-anchor": "middle" , "dy": "7", "font-size": "20"})){
-    timerText.setAttribute(attribute, value);
-}
+timerText.setAttributes({'id': 'timerText', "x": 50, "y": 50, "dy":7});
 timerText.innerHTML = 'Start';
-document.querySelector('#controls').appendChild(timer);
 
+document.querySelector('#controls').appendChild(timer);
 [timerBG, timerHand, timerText].forEach(element => timer.appendChild(element));
 
 let timerInterval;
@@ -44,8 +41,6 @@ function startTimer(limit = 60){
             rotateTimerHand(0, limit);
             // mixAllHex();
             alertScore();
-            timerText.innerHTML = 'Start';
-            rotateTimerHand(limit * magni, limit * magni);
             reset();
         }
     }, 1000 / magni);
@@ -53,13 +48,20 @@ function startTimer(limit = 60){
 }
 
 function toggleTimer(limit = 60){
-    if(timerInterval){
-        clearInterval(timerInterval);
-        timerInterval = null;
+    if(timer.classList.contains('board')){
+        timer.classList.remove('board');
+        timer.classList.add('timer');
+        timerText.textContent = 'Start';
+        timerHand.setAttribute('stroke-dasharray', '250.2,250.2');
     }else{
-        score = 0;
-        timerInterval = startTimer(limit);
-        start();
+        if(timerInterval){
+            clearInterval(timerInterval);
+            timerInterval = null;
+        }else{
+            score = 0;
+            timerInterval = startTimer(limit);
+            start();
+        }
     }
 }
 
@@ -68,6 +70,20 @@ function rotateTimerHand(currnet, limit, total = 250.2){
 }
 
 function alertScore(alertedScore = score){
-    alert('score : ' + alertedScore);
+    timer.classList.remove('timer');
+    timer.classList.add('board');
+    timerText.textContent = alertedScore;
 }
 timer.addEventListener('click', () => {toggleTimer(60);});
+
+// #board 클릭 시 만약 .borad-active 클래스라면 클래스를 제거하고 아니라면 클래스를 추가합니다.
+const board = document.querySelector('#board')
+board.addEventListener('click', (event) => {
+    if(board.classList.contains('board-active')){
+        board.classList.add('board-deactive');
+        board.classList.remove('board-active');
+    }else{
+        board.classList.remove('board-deactive');
+        board.classList.add('board-active');
+    }
+});

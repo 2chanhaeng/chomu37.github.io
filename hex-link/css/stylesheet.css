@@ -1,23 +1,55 @@
 #timer{
     position: absolute;
+    transition: 1s;
+}
+#timer > #timerBG{
+    fill: var(--btn-color);
+    transition: 1s;
+}
+#timer > #timerHand{
+    stroke: var(--btn-checked-color);
+    fill: none;
+    stroke-linecap: round;
+    stroke-width: 10;
+}
+#timer > #timerText{
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    text-anchor: middle;
+    font-size: 20;
+}
+#timer.timer{
     top: calc(var(--hexagon-width) * 0.6);
     left: calc(var(--controls-side-margin));
     width: var(--hexagon-width);
     height: var(--hexagon-width);
 }
-#timer > circle{
-    fill: var(--btn-color);
+#timer.timer > #timerBG{
+    d: path("m 50 0 a 50 50 90 0 0 -50 50 l 0 0 a 50 50 90 0 0 50 50 l 0 0 a 50 50 90 0 0 50 -50 l 0 0 a 50 50 90 0 0 -50 -50 l 0 0");
 }
-#timer > path{
-    stroke: var(--btn-checked-color);
+#timer.timer > #timerHand{
+    d: path("M50 10 a 40 40 0 0 1 0 80 a 40 40 0 0 1 0 -80");
 }
-#timer > text{
-    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+#timer.timer > #timerText{
 }
 
-#controls > * {
-    /* display: inline-block; */
+#timer.board{
+    transform: translate(-50%, -50%);
+    top: 50vh;
+    left: 50vw;
+    width: calc(var(--hexagon-width) * 5);
+    height: calc(var(--hexagon-width) * 5);
 }
+#timer.board > #timerBG{
+    d: path("m 20 0 a 20 20 90 0 0 -20 20 l 0 60 a 20 20 90 0 0 20 20 l 60 0 a 20 20 90 0 0 20 -20 l 0 -60 a 20 20 90 0 0 -20 -20 l -60 0");
+}
+#timer.board > #timerHand{
+    d: path("M 25 10 a 15 15 90 0 0 -15 15 l 0 50 a 15 15 90 0 0 15 15 l 50 0 a 15 15 90 0 0 15 -15 l 0 -50 a 15 15 90 0 0 -15 -15 l -50 0");
+    stroke-dasharray: 0%;
+}
+#timer.board > #timerText{
+}
+
+
 #view{
     position: absolute;
 }
@@ -27,6 +59,7 @@
 }
 
 #score{
+    top: calc(var(--hexagon-width) * 0.6);
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: calc(2 * var(--hexagon-width)/3);
     font-weight: bold;
