@@ -76,14 +76,5 @@ function alertScore(alertedScore = score){
 }
 timer.addEventListener('click', () => {toggleTimer(60);});
 
-// #board 클릭 시 만약 .borad-active 클래스라면 클래스를 제거하고 아니라면 클래스를 추가합니다.
-const board = document.querySelector('#board')
-board.addEventListener('click', (event) => {
-    if(board.classList.contains('board-active')){
-        board.classList.add('board-deactive');
-        board.classList.remove('board-active');
-    }else{
-        board.classList.remove('board-deactive');
-        board.classList.add('board-active');
-    }
-});
+timerModeSwitch.classList.replace('infinityMode', 'timerMode');
+tmsLabel.innerHTML = "<p>Infinity<br/>Mode</p>";

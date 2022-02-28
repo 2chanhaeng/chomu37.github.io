@@ -360,6 +360,16 @@ function reset(){
 }
 
 const mode = url.searchParams.get('mode');
+const timerModeSwitch = document.querySelector('#timerMode');
+const tmsLabel = document.querySelector('label[for="timerMode"]');
+timerModeSwitch.addEventListener('click', () => {
+    if(mode == 'timer'){
+        url.searchParams.delete('mode');
+    }else{
+        url.searchParams.set('mode', 'timer');
+    }
+    window.open(url, '_self');
+});
 
 if (mode == 'timer'){
     import('./timer.js');

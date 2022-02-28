@@ -18,8 +18,8 @@
     font-size: 20;
 }
 #timer.timer{
-    top: calc(var(--hexagon-width) * 0.6);
-    left: calc(var(--controls-side-margin));
+    top: calc(50vh - var(--hexagon-width) * 3);
+    left: calc(50vw - var(--hexagon-width) * 4);
     width: var(--hexagon-width);
     height: var(--hexagon-width);
 }
@@ -55,21 +55,21 @@
 }
 #score, #mixAllHex + label, #cancelAllCheckedCheckbox + label{
     position: absolute;
-    right: var(--controls-side-margin);
+    right: calc(50vw - var(--hexagon-width) * 4);
 }
 
 #score{
-    top: calc(var(--hexagon-width) * 0.6);
+    top: calc(50vh - var(--hexagon-width) * 3.5);
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: calc(2 * var(--hexagon-width)/3);
     font-weight: bold;
 }
 
-#mixAllHex, #cancelAllCheckedCheckbox{
+#mixAllHex, #cancelAllCheckedCheckbox, #timerMode{
     display: none;
 }
 
-#mixAllHex + label, #cancelAllCheckedCheckbox + label{
+#mixAllHex + label, #cancelAllCheckedCheckbox + label, #timerMode + label{
     clip-path: circle(50% at 50% 50%);
     width: var(--hexagon-width);
     height: var(--hexagon-width);
@@ -80,13 +80,35 @@
     font-family: sans-serif, "Helvetica Neue", Helvetica, Arial;
     font-size: calc(var(--hexagon-width) * 0.3);
 }
+#mixAllHex + label{
+    bottom: calc(50vh - var(--hexagon-width) * 2.4);
+    background-color: green;
+}
 #cancelAllCheckedCheckbox + label{
-    bottom: calc(var(--hexagon-width) * 0.6);
+    bottom: calc(50vh - var(--hexagon-width) * 3.5);
     background-color: red;
 }
-#mixAllHex + label{
-    bottom: calc(var(--hexagon-width) * 1.7);
-    background-color: green;
+#timerMode + label{
+    position: absolute;
+    left: calc(50vw - var(--hexagon-width) * 4);
+    bottom: calc(50vh - var(--hexagon-width) * 3.5);
+}
+#timerMode.infinityMode + label{
+    background-color: var(--btn-color);
+}
+#timerMode.timerMode + label{
+    background-color: var(--btn-checked-color);
+}
+#timerMode + label > p{
+    transform: translate(-50%, -50%);
+    font-family: sans-serif, "Helvetica Neue", Helvetica, Arial;
+    font-size: calc(var(--hexagon-width) * 0.3);
+}
+#timerMode.infinityMode + label > p{
+    color: #000;
+}
+#timerMode.timerMode + label > p{
+    color: #fff;
 }
 
 p {
@@ -99,6 +121,7 @@ p {
     top: 50%;
     left: 50%;
     z-index: 2;
+    text-align: center;
 }
 .pipe {
     position: relative;
@@ -288,6 +311,9 @@ input[type="checkbox"]:checked + .center{
     body {
         background-color: #ffffff;
     }
+    svg > text{
+        fill: #fff;
+    }
 }
 @media (prefers-color-scheme: dark) {
     :root{
@@ -299,5 +325,8 @@ input[type="checkbox"]:checked + .center{
     }
     body {
         background-color: #000000;
+    }
+    svg > text{
+        fill: #000;
     }
 }
