@@ -7,7 +7,15 @@ function rand64(){
     return Math.floor(Math.random() * 61) + 3;
 }
 
-const banned = new Set([0, 4, 8, 16, 32,/*1*/ 3, 5, 9, 17, 33,/*2*/ 6, 10, 18, 34,/*4*/ 12, 20, 36,/*8*/ 24, 40,/*16*/ 48]);
+const hard = url.searchParams.get('hard');
+let banned_list = [0, 4, 8, 16, 32];
+if ((hard == null) || (hard != 'hard')){
+    banned_list = banned_list.concat([/*1*/ 3, 5, 9, 17, 33,/*2*/ 6, 10, 18, 34,/*4*/ 12, 20, 36,/*8*/ 24, 40,/*16*/ 48]);
+}
+if (hard == 'easy'){
+    banned_list = banned_list.concat([/*3*/ 7, 11, 19, 35,/*5*/ 13, 21, 37,/*9*/ 25, 41,/*17*/ 49,/*6*/ 14, 22, 38,/*10*/ 26, 42,/*18*/ 50,/*12*/ 28, 44,/*20*/ 52,/*24*/ 56]);
+}
+const banned = new Set(banned_list);
 // 0, 4, 8, 16, 32 가 아닌 수가 나올 때까지 반복
 function getNew(){
     let result = 0
@@ -359,20 +367,25 @@ function reset(){
     score = 0;
 }
 
-const mode = url.searchParams.get('mode');
-const timerModeSwitch = document.querySelector('#timerMode');
-const tmsLabel = document.querySelector('label[for="timerMode"]');
-timerModeSwitch.addEventListener('click', () => {
-    if(mode == 'timer'){
-        url.searchParams.delete('mode');
-    }else{
-        url.searchParams.set('mode', 'timer');
-    }
-    window.open(url, '_self');
+const modeSwitch = document.querySelector("#modeSwitch");
+let isTimer = modeSwitch.checked;
+modeSwitch.addEventListener('click', () => {
+    isTimer = modeSwitch.checked;
+    chooseMode(isTimer)
 });
 
-if (mode == 'timer'){
-    import('./timer.js');
-}else{
-    start();
+function chooseMode(isTimer){
+    if (isTimer){
+        let makeTimer;
+        import('./timer.js').then(module => {
+            makeTimer = module.default;
+            reset();
+            makeTimer();
+        });
+    }else{
+        let timer = document.querySelector('#timer')
+        if(timer){timer.remove();}
+        start();
+    }
 }
+chooseMode(isTimer)

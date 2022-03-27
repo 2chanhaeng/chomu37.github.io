@@ -1,6 +1,5 @@
 "use strict";
 
-// make timer
 const svgns = "http://www.w3.org/2000/svg";
 
 Element.prototype.setAttributes = function (attrs){
@@ -9,21 +8,26 @@ Element.prototype.setAttributes = function (attrs){
     }
 }
 
-const timer = document.createElementNS(svgns, 'svg');
-timer.setAttributes({"id": "timer", "viewBox": "0 0 100 100", "class": "timer"});
+// make timer
+export default function makeTimer(){
+    const timer = document.createElementNS(svgns, 'svg');
+    timer.setAttributes({"id": "timer", "viewBox": "0 0 100 100", "class": "timer"});
+    
+    const timerBG = document.createElementNS(svgns, 'path');
+    timerBG.setAttributes({'id': 'timerBG'});
+    
+    const timerHand = document.createElementNS(svgns, 'path');
+    timerHand.setAttributes({'id': 'timerHand', "stroke-dasharray": "250,250"});
+    
+    const timerText = document.createElementNS(svgns, 'text');
+    timerText.setAttributes({'id': 'timerText', "x": 50, "y": 50, "dy":7});
+    timerText.innerHTML = 'Start';
+    
+    document.querySelector('#controls').appendChild(timer);
+    [timerBG, timerHand, timerText].forEach(element => timer.appendChild(element));
 
-const timerBG = document.createElementNS(svgns, 'path');
-timerBG.setAttributes({'id': 'timerBG'});
-
-const timerHand = document.createElementNS(svgns, 'path');
-timerHand.setAttributes({'id': 'timerHand', "stroke-dasharray": "250,250"});
-
-const timerText = document.createElementNS(svgns, 'text');
-timerText.setAttributes({'id': 'timerText', "x": 50, "y": 50, "dy":7});
-timerText.innerHTML = 'Start';
-
-document.querySelector('#controls').appendChild(timer);
-[timerBG, timerHand, timerText].forEach(element => timer.appendChild(element));
+    timer.addEventListener('click', () => {toggleTimer(60);});
+}
 
 let timerInterval;
 
@@ -74,7 +78,3 @@ function alertScore(alertedScore = score){
     timer.classList.add('board');
     timerText.textContent = alertedScore;
 }
-timer.addEventListener('click', () => {toggleTimer(60);});
-
-timerModeSwitch.classList.replace('infinityMode', 'timerMode');
-tmsLabel.innerHTML = "<p>Infinity<br/>Mode</p>";

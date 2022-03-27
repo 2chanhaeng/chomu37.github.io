@@ -18,7 +18,7 @@
     font-size: 20;
 }
 #timer.timer{
-    top: calc(50vh - var(--hexagon-width) * 3);
+    top: calc(50vh - var(--hexagon-width) * 2.5);
     left: calc(50vw - var(--hexagon-width) * 4);
     width: var(--hexagon-width);
     height: var(--hexagon-width);
@@ -47,6 +47,43 @@
     stroke-dasharray: 0%;
 }
 #timer.board > #timerText{
+}
+
+#modeSwitch + label, #modeSwitch + label > span{
+    display: block;
+    position: absolute;
+}
+#modeSwitch + label:before,
+#modeSwitch + label:after,
+#modeSwitch + label span:before,
+#modeSwitch + label span:after {
+  content: '';
+  display: block;
+  position: absolute;
+}
+#modeSwitch + label span{
+    left: calc(50vw - var(--hexagon-width) * 4.1);
+    top: calc(50vh - var(--hexagon-width) * 3.2);
+    border-radius: calc(var(--hexagon-width)/4);
+    height: calc(var(--hexagon-width)/2);
+    width: var(--hexagon-width);
+    background: #e74c3c;
+    transition: background 0.4s;
+}
+#modeSwitch + label span:before{
+    border-radius: 50%;
+    height: calc(var(--hexagon-width) * 7/16);
+    width: calc(var(--hexagon-width) * 7/16);
+    left: calc(var(--hexagon-width) / 32);
+    top: calc(var(--hexagon-width) / 32);
+    background: #ECF0F1;
+    transition: left 0.4s;
+}
+#modeSwitch:checked + label span{
+    background: #2ecc71;
+}
+#modeSwitch:checked + label span:before{
+    left: calc(var(--hexagon-width) * 17/32);
 }
 
 
@@ -81,34 +118,12 @@
     font-size: calc(var(--hexagon-width) * 0.3);
 }
 #mixAllHex + label{
-    bottom: calc(50vh - var(--hexagon-width) * 2.4);
+    top: calc(50vh + var(--hexagon-width) * 1.4);
     background-color: green;
 }
 #cancelAllCheckedCheckbox + label{
-    bottom: calc(50vh - var(--hexagon-width) * 3.5);
+    top: calc(50vh + var(--hexagon-width) * 2.5);
     background-color: red;
-}
-#timerMode + label{
-    position: absolute;
-    left: calc(50vw - var(--hexagon-width) * 4);
-    bottom: calc(50vh - var(--hexagon-width) * 3.5);
-}
-#timerMode.infinityMode + label{
-    background-color: var(--btn-color);
-}
-#timerMode.timerMode + label{
-    background-color: var(--btn-checked-color);
-}
-#timerMode + label > p{
-    transform: translate(-50%, -50%);
-    font-family: sans-serif, "Helvetica Neue", Helvetica, Arial;
-    font-size: calc(var(--hexagon-width) * 0.3);
-}
-#timerMode.infinityMode + label > p{
-    color: #000;
-}
-#timerMode.timerMode + label > p{
-    color: #fff;
 }
 
 p {
@@ -262,6 +277,16 @@ input[type="checkbox"]:checked + .center{
     left:  calc(var(--x-center) + var(--relative-x6));
 }
 
+h1,h2,h3,p {
+    color: #fff;
+}
+body {
+    background-color: #000000;
+}
+svg > text{
+    fill: #000;
+}
+
 :root{
     --hexagon-height: min(9vh,8vw);
     --hexagon-width: calc(var(--hexagon-height) * 1.55);
@@ -299,34 +324,7 @@ input[type="checkbox"]:checked + .center{
     --15h: calc(1.5 * var(--hexagon-height));
 
     --controls-side-margin: calc(var(--hexagon-width) / 2);
-}
-@media (prefers-color-scheme: light) {
-    :root{
-        --btn-color: #C00000;
-        --btn-checked-color: #00ffff;
-    }
-    h1,h2,h3,p {
-        color: #000;
-    }
-    body {
-        background-color: #ffffff;
-    }
-    svg > text{
-        fill: #fff;
-    }
-}
-@media (prefers-color-scheme: dark) {
-    :root{
-        --btn-color: #ffff00;
-        --btn-checked-color: #0000c0;
-    }
-    h1,h2,h3,p {
-        color: #fff;
-    }
-    body {
-        background-color: #000000;
-    }
-    svg > text{
-        fill: #000;
-    }
+
+    --btn-color: #ffff00;
+    --btn-checked-color: #0000c0;
 }
