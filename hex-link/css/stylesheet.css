@@ -19,7 +19,7 @@
 }
 #timer.timer{
     top: calc(50vh - var(--hexagon-width) * 2.5);
-    left: calc(50vw - var(--hexagon-width) * 4);
+    left: calc(50vw - var(--hexagon-width) * 3.95);
     width: var(--hexagon-width);
     height: var(--hexagon-width);
 }
@@ -62,7 +62,7 @@
   position: absolute;
 }
 #modeSwitch + label span{
-    left: calc(50vw - var(--hexagon-width) * 4.1);
+    left: calc(50vw - var(--hexagon-width) * 4);
     top: calc(50vh - var(--hexagon-width) * 3.2);
     border-radius: calc(var(--hexagon-width)/4);
     height: calc(var(--hexagon-width)/2);
