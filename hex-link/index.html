@@ -15,8 +15,16 @@
     </div>
     <div id="controls">
         <h1 id="score"></h1>
+        <div id="difficultyRadio">
+            <input type="radio" name="difficultyRadio" id="easy" value="easy" />
+            <label for="easy">Easy</label>
+            <input type="radio" name="difficultyRadio" id="medium" value="medium" />
+            <label for="medium">Medium</label>
+            <input type="radio" name="difficultyRadio" id="hard" value="hard" />
+            <label for="hard">Hard</label>
+        </div>
         <input type="checkbox" id="modeSwitch" value="modeSwitch" class="infinityMode">
-        <label for="modeSwitch"><span></span></label>
+        <label for="modeSwitch"></label>
         <input type="button" id="mixAllHex" value="mixAllHex" onclick="mixAllHex()">
         <label for="mixAllHex"><p>Mix</p></label>
         <input type="button" id="cancelAllCheckedCheckbox" value="cancelAllCheckedCheckbox" onclick="cancelAllCheckedCheckbox()">

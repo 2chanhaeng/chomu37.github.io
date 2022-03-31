@@ -8,8 +8,19 @@ Element.prototype.setAttributes = function (attrs){
     }
 }
 
+let timerInterval;
+
+function initTimer(){
+    let prevTimer = document.querySelector('#timer');
+    if(prevTimer){prevTimer.remove();}
+    stopTimer();
+    reset();
+}
+
 // make timer
-export default function makeTimer(){
+export function makeTimer(){
+    initTimer();
+
     const timer = document.createElementNS(svgns, 'svg');
     timer.setAttributes({"id": "timer", "viewBox": "0 0 100 100", "class": "timer"});
     
@@ -27,28 +38,34 @@ export default function makeTimer(){
     [timerBG, timerHand, timerText].forEach(element => timer.appendChild(element));
 
     timer.addEventListener('click', () => {toggleTimer(60);});
+
 }
 
-let timerInterval;
 
 function startTimer(limit = 60){
     const magni = 100;
     let time = limit * magni;
     let timerId = setInterval(() => {
         time -= 1;
-        timer.querySelector('text').innerHTML = time / magni;
+        timer.querySelector('text').innerHTML = Number.parseFloat(time / magni).toFixed(2);
         rotateTimerHand(time, limit * magni);
         if(isDebug & time % 10 == 0){console.log(time)}
         if(time <= 0){
             toggleTimer();
             timer.querySelector('text').innerHTML = 0;
             rotateTimerHand(0, limit);
-            // mixAllHex();
             alertScore();
             reset();
         }
     }, 1000 / magni);
     return timerId;
+}
+
+export function stopTimer(){
+    if(timerInterval){
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
 }
 
 function toggleTimer(limit = 60){

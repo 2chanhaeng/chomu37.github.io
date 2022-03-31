@@ -1,3 +1,19 @@
+#difficultyRadio{
+    top: calc(50vh - var(--hexagon-width) * 3.5);
+    left: calc(50vw - var(--hexagon-width) * 4);
+    position: absolute;
+}
+#difficultyRadio > label {
+    font-size: min(2.5vw,3vh);
+    text-align: right;
+    color: #fff;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+#difficultyRadio > input:checked + label {
+    color: #000;
+    background-color: #ffff00;
+}
+
 #timer{
     position: absolute;
     transition: 1s;
@@ -18,8 +34,9 @@
     font-size: 20;
 }
 #timer.timer{
-    top: calc(50vh - var(--hexagon-width) * 2.5);
-    left: calc(50vw - var(--hexagon-width) * 3.95);
+    transform: translate(-50%, -50%);
+    top:  calc(var(--y-center) + var(--relative-y02));
+    left: calc(var(--x-center) + var(--relative-x06));
     width: var(--hexagon-width);
     height: var(--hexagon-width);
 }
@@ -49,40 +66,39 @@
 #timer.board > #timerText{
 }
 
-#modeSwitch + label, #modeSwitch + label > span{
+#modeSwitch + label{
     display: block;
     position: absolute;
 }
 #modeSwitch + label:before,
-#modeSwitch + label:after,
-#modeSwitch + label span:before,
-#modeSwitch + label span:after {
+#modeSwitch + label:after {
   content: '';
   display: block;
   position: absolute;
 }
-#modeSwitch + label span{
-    left: calc(50vw - var(--hexagon-width) * 4);
-    top: calc(50vh - var(--hexagon-width) * 3.2);
-    border-radius: calc(var(--hexagon-width)/4);
-    height: calc(var(--hexagon-width)/2);
+#modeSwitch + label{
+    transform: translate(-50%, -50%);
+    top:  calc(var(--y-center) + var(--relative-y03) * 0.95);
+    left: calc(var(--x-center) + var(--relative-x06));
+    border-radius: calc(var(--hexagon-width) / 4);
+    height: calc(var(--hexagon-width) / 2);
     width: var(--hexagon-width);
-    background: #e74c3c;
+    background: #c00;
     transition: background 0.4s;
 }
-#modeSwitch + label span:before{
+#modeSwitch + label:before{
     border-radius: 50%;
-    height: calc(var(--hexagon-width) * 7/16);
-    width: calc(var(--hexagon-width) * 7/16);
+    height: calc(var(--hexagon-width) * 7 / 16);
+    width: calc(var(--hexagon-width) * 7 / 16);
     left: calc(var(--hexagon-width) / 32);
     top: calc(var(--hexagon-width) / 32);
     background: #ECF0F1;
     transition: left 0.4s;
 }
-#modeSwitch:checked + label span{
-    background: #2ecc71;
+#modeSwitch:checked + label{
+    background: #0c0;
 }
-#modeSwitch:checked + label span:before{
+#modeSwitch:checked + label:before{
     left: calc(var(--hexagon-width) * 17/32);
 }
 
@@ -169,7 +185,7 @@ p {
 input[type="checkbox"]:checked + .center .pipe{
     background-color: var(--btn-color);
 }
-input[type="checkbox"]{
+input[type="checkbox"], input[type="radio"]{
     display: none;
 }
 input[type="checkbox"] + .center{
