@@ -28,7 +28,7 @@ span {
     border-bottom: 1px solid black;
 }
 .denom, .denom-on-top {
-    border: 2px solid #e8e800;
+    border: 1px solid #e8e800;
 }
 .A .natur {
     border: 1px solid darkorange;
@@ -40,7 +40,7 @@ span {
     border: 1px solid magenta;
 }
 .B .natur {
-    border: 2px solid #8f0;
+    border: 1px solid #8f0;
 }
 .B .numer {
     border: 1px solid green;
@@ -56,6 +56,9 @@ span {
 }
 .numer-A-B {
     border: 1px solid blue;
+}
+.fomul .top input {
+    width: 7vw;
 }
 
 .reset {
