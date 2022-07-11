@@ -1,0 +1,103 @@
+
+.A, .B, .A-B {
+    margin: 8px;
+}
+.fomular {
+    display: flex;
+    align-items: center;
+}
+input {
+    font-size: 20px;
+    width: 10vw;
+    margin: 4px;
+    border-radius: 1em;
+    text-align: center;
+}
+span {
+    font-size: 20px;
+}
+.mixed {
+    display: flex;
+}
+.frac {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.top {
+    border-bottom: 1px solid black;
+}
+.denom, .denom-on-top {
+    border: 2px solid #e8e800;
+}
+.A .natur {
+    border: 1px solid darkorange;
+}
+.A .numer {
+    border: 1px solid red;
+}
+.numer-A {
+    border: 1px solid magenta;
+}
+.B .natur {
+    border: 2px solid #8f0;
+}
+.B .numer {
+    border: 1px solid green;
+}
+.numer-B {
+    border: 1px solid aqua;
+}
+.A-B .natur {
+    border: 1px solid #08f;
+}
+.A-B .numer {
+    border: 1px solid mediumpurple;
+}
+.numer-A-B {
+    border: 1px solid blue;
+}
+
+.reset {
+    font-size: 5vw;
+    float: right;
+    margin: 1vw;
+}
+
+.vibrate {
+    animation: shm 0.1s infinite alternate;
+}
+
+@keyframes shm {
+    from {
+        margin-left:0%;
+        animation-timing-function: cubic-bezier(0.25, 0.01, 0.55, 0.16);
+    }
+    25% {
+        margin-left:0.5%;
+        animation-timing-function: cubic-bezier(0.52, 0.44, 0.47, 0.44);
+    }
+    50% {
+        margin-left:2.5%;
+        animation-timing-function: cubic-bezier(0.53, 0.56, 0.48, 0.56);
+    }
+    75% {
+        margin-left:4.5%;
+        animation-timing-function: cubic-bezier(0.45, 0.84, 0.75, 0.99);
+    }
+    to {
+        margin-left:5%;
+    }
+}
+
+
+/* input[type=number] 화살표 지우기 */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
