@@ -1,4 +1,4 @@
-const clock = document.querySelector("h2#clock");
+const clock = document.querySelector("#clock");
 
 int2Str = int => String(int).padStart(2, "0");
 

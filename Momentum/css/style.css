@@ -1,13 +1,20 @@
-#without-quote{
-    background-size: cover;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-content: space-around;
+
+#clock-greeting-weather {
+}
+#clock-container {
 }
 #clock {
-    padding: 5vh;
     font-size: min(20vh, 20vw);
+    flex: 1;
+}
+#login-input {
+    border: 0 solid black;
+    background-color: transparent;
+}
+#login-button {
+    border: 0 solid black;
+    border-radius: 1vh;
+    background-color: #ffffff80;
 }
 #weather {
     flex-grow: 0;
@@ -15,26 +22,22 @@
 #weather > *{
     width: 50%;
 }
-#greeting-weather{
-    flex-basis: 0;
-}
 #todo-list{
     overflow: auto;
 }
-#quote:first-child{
-    font-style: bold;
-}
-#todo-form {
-}
 #todo-input {
-    width: 90%;
+    background-color: transparent;
     border: 0 solid black;
+    width: 30em;
 }
 #todo-list {
     padding-left: 0;
 }
 #quote {
     margin-bottom: auto;
+}
+#quote:first-child{
+    font-style: bold;
 }
 
 #todo-list > li{
@@ -51,11 +54,19 @@
     background-color: transparent;
     margin-left: auto;
 }
+.flex-flow {
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: space-around;
+}
 .text-bg {
     padding: 2vh;
     border-radius: 2vh;
     margin: 1vh;
     background-color: #ffffff80;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .hidden {
     display: none;
@@ -68,10 +79,11 @@
     flex-grow: 1;
 }
 
-* {
-    text-align: center;
-}
 body {
+    background-size: cover;
     display: flex;
     flex-direction: column;
+}
+* {
+    text-align: center;
 }

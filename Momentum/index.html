@@ -11,22 +11,27 @@
     <title>Momentum App</title>
 </head>
 <body>
-    <div id="without-quote">
-        <form id="login-form" class="hidden">
-            <input 
-                type="text" 
-                placeholder="What is your name?" 
-                maxlength="15"
-                required
-            />
-            <button>Log In</button>
-        </form>
-        <div id="clock-greeting-weather" class="flex-container">
-            <div id="clock-container">
-                <h2 id="clock" class="text-bg">00:00</h2>
+    <div id="without-quote" class="flex-container flex-flow">
+        <div id="clock-greeting-weather" class="flex-container flex-flow">
+            <div id="clock-container" class="flex-container flex-column">
+                <div id="clock" class="text-bg">
+                    00:00:00
+                </div>
             </div>
             <div id="greeting-weather" class="flex-container flex-column">
-                <h1 class="hidden text-bg" id="greeting"></h1>
+                <div id="login-greeting" class="text-bg">
+                    <form id="login-form" class="hidden">
+                        <input
+                            id="login-input"
+                            type="text" 
+                            placeholder="What is your name?" 
+                            maxlength="15"
+                            required
+                        />
+                        <button id="login-button">Log In</button>
+                    </form>
+                    <h1 class="hidden" id="greeting"></h1>
+                </div>
                 <div id="weather" class="flex-container">
                     <span class="text-bg"></span>
                     <span class="text-bg"></span>
@@ -34,12 +39,13 @@
             </div>
         </div>
         <div id="todoform-todos" class="flex-container flex-column">
-            <form id="todo-form">
-                <input id="todo-input"
-                    class="text-bg"
+            <form id="todo-form" class="text-bg">
+                <input
+                    id="todo-input"
                     type="text"
                     placeholder="Write a To Do and Press Enter"
-                    required />
+                    required
+                />
             </form>
             <ul id="todo-list" class="flex-container flex-column"></ul>
         </div>
