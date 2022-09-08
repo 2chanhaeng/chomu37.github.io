@@ -4,7 +4,7 @@
   {{ categories }}
   <script> console.log({{ categories }}) </script>
   {% for node in categories %}
-    <li>"{{ node }}"
-    "{{ node.name }}"</li>
+  """{{ node | first }}"""
+  """{% node | first %}"""
   {% endfor %}
 </ul>
