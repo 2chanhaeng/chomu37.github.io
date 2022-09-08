@@ -1,10 +1,10 @@
 ---
 layout: post
-category: Jekill
+category: Jekyll
 title: Jekyll을 사용한 GitHub Pages 블로그 카테고리화
 description: >
-  Jekill을 사용한 GitHub Pages 블로그에서 글을 카테고리화 하며 남기는 글
-tags: Jekill, GitHub Pages
+  Jekyll을 사용한 GitHub Pages 블로그에서 글을 카테고리화 하며 남기는 글
+tags: [Jekyll, GitHub Pages]
 ---
 {% raw %}
 최종 목표: 사이드 바에 카테고리 출력
@@ -126,6 +126,9 @@ category: category
 ---
 ```
 이후 해당 파일이 있는 폴더에 이 글을 포함시킨 뒤 푸시를 했습니다.
+하지만 생각대로 잘 풀리지 않았습니다.
+1. 사이드 바 표출되지 않음
+  사이드 바에 카테고리가 표출되지 않았습니다.
 
 {% endraw %}
 # 출처 및 참고
