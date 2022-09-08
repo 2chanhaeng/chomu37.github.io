@@ -1,9 +1,7 @@
 <span class="sr-only">{{ site.data.strings.navigation | default:"Navigation" }}{{ site.data.strings.colon | default:":" }}</span>
 <ul>
   {% assign categories = site.categories | first | prepend: "/" %}
-  {% assign documents = site.documents | where: "menu", true %}
-  {% assign nodes = categories | concat: documents | sort: "order" %}
-  {% for node in nodes %}
+  {% for node in categories %}
     {% unless node.redirect_to %}
       <li>
         <a
