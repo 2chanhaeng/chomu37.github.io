@@ -4,23 +4,7 @@
   {{ categories }}
   <script> console.log({{ categories }}) </script>
   {% for node in categories %}
-    {% unless node.redirect_to %}
-      {{ node }}
-      {{ node.name }}
-      <li>
-        <a
-          {% if forloop.first %}id="_navigation"{% endif %}
-          href="{{ node.url | relative_url }}"
-          class="sidebar-nav-item{% if page.url contains node.url %} active{% endif %}"
-          {% if path.rel %}rel="{{ node.rel }}"{% endif %}
-          >
-          {{ node.title }}
-        </a>
-      </li>
-    {% else %}
-      <li>
-        <a href="{{ node.redirect_to }}" class="sidebar-nav-item external" >{{ node.title }}</a>
-      </li>
-    {% endunless %}
+    <li>"{{ node }}"
+    "{{ node.name }}"</li>
   {% endfor %}
 </ul>
