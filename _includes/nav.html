@@ -1,10 +1,9 @@
 <span class="sr-only">{{ site.data.strings.navigation | default:"Navigation" }}{{ site.data.strings.colon | default:":" }}</span>
 <ul>
   {% assign categories = site.categories %}
-  <script> console.log({{ categories }}) </script>
   {% for node in categories %}
-  """{{ node | first }}"""
-  ---
-  """{% node | first %}"""
+  "asd""{{ node | first }}"""
+  <!--asd-->
+  "asd""{% node | first %}"""
   {% endfor %}
 </ul>
