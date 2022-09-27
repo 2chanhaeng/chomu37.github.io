@@ -47,3 +47,5 @@ _zip
 
 .keys
 keys/openweathermap.json
+
+.jekyll-cache/
