@@ -4,7 +4,7 @@ category: Jekyll
 title: Jekyll을 사용한 GitHub Pages 블로그 카테고리화
 description: >
   Jekyll을 사용한 GitHub Pages 블로그에서 글을 카테고리화 하며 남기는 글
-tags: [Jekyll, GitHub Pages]
+tags: [Jekyll, GitHub_Pages]
 ---
 {% raw %}
 최종 목표: 사이드 바에 카테고리 출력
@@ -65,27 +65,24 @@ HydeJack으로 테마를 적용한 제 블로그는 `nav.html` 파일은 기본�
 
 하면 될 것이라고 생각했습니다.
 
-# 전체 카테고리 페이지 만들기
+# 사이드바에서 전체 카테고리 표출하도록 만들기
 `_includes/nav.html` 을 다음과 같이 수정했습니다.
 ```html
 <!-- 생략 -->
 <ul>
-  {% assign categories = site.categories | first | prepend: "/" %}
-  <!--
-    `first`: 배열에서 가장 앞의 원소를 넘깁니다.
-    `prepend`: 문자열의 가장 앞에 뒤에 오는 문자열을 추가합니다. 뒤에 추가할 때는 `append`를 사용합니다.
-    `site.categories` 에서 `first` 필터로 카테고리의 이름을 가져온 뒤 앞에 `/`를 붙여 상대 경로로 만들었습니다.
-  -->
-  {% assign documents = site.documents | where: "menu", true %}
-  {% assign nodes = categories | concat: documents | sort: "order" %}
-  <!-- pages 대신 categories 를 넣어줬습니다. -->
-  {% for node in nodes %}
+  {% for category in site.categories %}
+    <!-- site.categories 에는 사이트 내 페이지들의 카테고리 별 페이지 목록이 담겨있습니다. -->
+    <li><a href="/category/{{ category | first }}"><strong>{{ category | first }}</strong></a></li>
+    <!-- {{ category | first }} 는 카테고리의 이름이 들어있습니다. -->
+  {% endfor %}
+</ul>
 <!-- 생략 -->
 ```
+원래 `/category/` 대신 `{{ category.url }}`으로 사용할 수 있으나(`_config.yml`에서 수정 가능) 알 수 없는 이유로 종종 `/category/`으로 연결되지 않는 오류가 발생하여 직접 작성하였습니다.
 
-이후 카테고리 폴더 별로 `index.html` 파일을 추가하여 해당 페이지를 카테고리 별 페이지로 만들 것입니다.
+# 카테고리 페이지 만들기
 
-# 카테고리 별 페이지 만들기
+## 레이아웃 만들기
 
 카테고리 별 페이지를 일정하게 만들기 위해 레이아웃을 먼저 지정해줄 것입니다. `_layouts` 폴더에 자주 쓰는 형식을 레이아웃으로 저장할 수 있습니다. `_layouts` 폴더 내에 다음과 같은 내용의 `category.html`를 추가합니다. [지킬(Jekyll) 블로그 카테고리(category) 만들기](https://devyurim.github.io/development%20environment/github%20blog/2018/08/07/blog-6.html)를 참고했습니다.
 
@@ -94,18 +91,16 @@ HydeJack으로 테마를 적용한 제 블로그는 `nav.html` 파일은 기본�
 ---
 layout: default
 ---
-<ul class="posts-list">
-  {% assign category = page.category | default: page.title %}
-  <!-- 현재 페이지의 `category` 요소를 가져옵니다. 없다면 페이지 제목을 가져옵니다. 이를 `category` 변수에 할당합니다. -->
+{% assign category = page.category | default: page.title %}
+<!-- 현재 페이지의 `category` 요소를 가져옵니다. 없다면 페이지 제목을 가져옵니다. 이를 `category` 변수에 할당합니다. -->
+<ul>
   {% for post in site.categories[category] %}
   <!-- 사이트에서 `category` 카테고리인 페이지들을 가져와 `post`에 할당하는 for문 입니다. -->
     <li>
-      <h3>
-        <a href="{{ site.baseurl }}{{ post.url }}"> {{ post.title }} </a>
-        <!-- `post` 제목을 표시하고 해당 글의 URL을 링크합니다. -->
-        <small>{{ post.date | date_to_string }}</small>
-        <!-- 글이 쓰여진 날짜를 문자열로 바꿔 표시합니다. -->
-      </h3>
+      <a href="{{ post.url }}"> {{ post.title }} </a>
+      <!-- `post` 제목을 표시하고 해당 글의 URL을 링크합니다. -->
+      <small>{{ post.date | date_to_string }}</small>
+      <!-- 글이 쓰여진 날짜를 문자열로 바꿔 표시합니다. -->
     </li>
   {% endfor %}
 </ul>
@@ -115,20 +110,39 @@ layout: default
 
 이후 머리말에 `layout: category`을 적어주면 해당 레이아웃이 적용됩니다.
 
-# 예시: `Jekyll` 카테고리 만들기
+## 카테고리 별 페이지 만들기
 
-예시로 `Jekyll` 카테고리를 만들어 이 글을 해당 카테고리에 포함시켜 보겠습니다.
-먼저 `Jekyll/index.html` 파일을 다음과 같이 만들었습니다.
+먼저 `category/` 경로를 만든 뒤, 해당 경로 내에 카테고리 별 이름을 가진 markdown 파일을 만들어 줍니다. 그 후, 레이아웃을 `category`으로 지정하고, 카테고리나 페이지 제목을 해당 카테고리 이름으로 지정합니다. 예를 들어서, `Jekyll`이라는 카테고리를 만들었을 경우, `category/Jekyll.md` 파일을 만든 뒤, 내용을 다음과 같이 지정합니다.
 ```markdown
 ---
 layout: category
-category: category
+category: Jekyll
+title: Jekyll
 ---
 ```
-이후 해당 파일이 있는 폴더에 이 글을 포함시킨 뒤 푸시를 했습니다.
-하지만 생각대로 잘 풀리지 않았습니다.
-1. 사이드 바 표출되지 않음
-  사이드 바에 카테고리가 표출되지 않았습니다.
+상기했듯, 카테고리와 제목 둘 중에 하나만 지정할 수 있습니다. 왜냐하면, 먼저 페이지의 카테고리를 가져온 뒤, 카테고리가 없다면 제목을 가져오도록 만들었기 때문입니다.
+
+# 전체 카테고리 페이지 만들기
+
+추가로 모든 카테고리를 볼 수 있는 페이지를 만들겠습니다. `category/index.md` 파일을 만든 뒤 `_includes/nav.html`에 수정했던 내용과
+```markdown
+---
+layout: default
+title: Category
+---
+<ul>
+  {% for category in site.categories %}
+    <li><a href="/category/{{ category | first }}"><strong>{{ category | first }}</strong></a></li>
+  {% endfor %}
+</ul>
+```
+금방 눈치채시겠지만 `_includes/nav.html`와 비슷한 내용입니다. 해당 페이지를 만든 뒤, 사이드바에서 전체 카테고리 페이지와 날짜별 포스트를 볼 수 있도록 `_includes/nav.html`에 다음과 같은 내용을 추가했습니다.
+```html
+<ul>
+  <li><a href="/category"><strong>Category</strong></a></li>
+  <li><a href="/posts"><strong>Posts</strong></a></li>
+</ul>
+```
 
 {% endraw %}
 # 출처 및 참고
