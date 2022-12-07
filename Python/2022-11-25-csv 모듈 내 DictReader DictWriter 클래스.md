@@ -3,7 +3,7 @@ layout: post
 title: csv 모듈 내 DictReader DictWriter 클래스
 category: Python
 description: >
-  저의 첫 GitHub Pages 포스트 입니다.
+  csv 모듈 내 `DictReader`, `DictWriter` 클래스에 대한 설명한다.
 tags: [Python, CSV, TIL]
 ---
 # csv 모듈 내 DictReader DictWriter 클래스
