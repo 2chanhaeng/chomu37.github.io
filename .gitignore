@@ -49,3 +49,7 @@ _zip
 keys/openweathermap.json
 
 .jekyll-cache/
+
+# personal
+
+writing/
