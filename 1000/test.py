@@ -2,16 +2,20 @@ import builtins
 import io
 import json
 import sys
+import traceback
 from typing import Callable, Optional
 
 prints: list[str] = []
 
 
 def print(*args, **kwargs):
-    prints.append(
-        kwargs.get("sep", " ").join(map(str, args))
-        + kwargs.get("end", "\n")
-    )
+    if traceback.extract_stack()[3].name == "test":
+        prints.append(
+            kwargs.get("sep", " ").join(map(str, args))
+            + kwargs.get("end", "\n")
+        )
+    else:
+        builtins.print(*args, **kwargs)
 
 
 def test(solution: Callable[[], None]):
