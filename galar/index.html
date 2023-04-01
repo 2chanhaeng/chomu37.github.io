@@ -61,7 +61,7 @@ tr.fold {
     .then(
         () => {
             const trs = document.querySelectorAll("tbody tr")
-            let foldings_ls = localStorage.getItem("foldings"),
+            let foldings_ls = localStorage.getItem("galar"),
             /** @type {boolean[]} foldings */
             foldings = [];
             if (foldings_ls) {
@@ -80,7 +80,7 @@ tr.fold {
                     tr.addEventListener("click", () => {
                         tr.classList.toggle("fold");
                         foldings[i] = !foldings[i];
-                        localStorage.setItem("foldings", JSON.stringify(foldings));
+                        localStorage.setItem("galar", JSON.stringify(foldings));
                     });
             });
         }
