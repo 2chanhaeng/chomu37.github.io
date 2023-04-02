@@ -8,18 +8,32 @@
     tr.fold td:nth-child(5) {
         display: none;
     }
+
     tr:nth-child(even) {
         background-color: #f2f2f2;
     }
 
-tr.fold {
-    height: 1em;
-    background-color: #888;
-}
-.fixed {
-    word-break: keep-all;
-}
+    table.map {
+        background-image: url("./static/img/map.png");
+        background-size: cover;
+    }
 
+    tr.coord {
+        background-color: #ffff0080;
+    }
+
+    #content>tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    tr.fold {
+        height: 1em;
+        background-color: #888;
+    }
+
+    .fixed {
+        word-break: keep-all;
+    }
 </style>
 <table>
     <thead>
@@ -31,17 +45,16 @@ tr.fold {
             <th>포획</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody class="contents">
     </tbody>
 </table>
 <script>
     fetch("./static/pokedex.json")
         .then(res => res.json())
         .then(pokedex => {
-            const tbody = document.querySelector("tbody");
+            const tbody = document.querySelector("tbody.contents");
             pokedex.forEach(
                 (pokemon, i) => {
-                    console.log(pokemon);
                     const tr = document.createElement("tr");
                     tr.innerHTML = `
                         <td>${i + 1}</td>
@@ -56,35 +69,51 @@ tr.fold {
                         </td>
                         <td class="fixed">${pokemon.name}</td>
                         <td>${pokemon.evol}</td>
-                        <td>${pokemon.catch}</td>
+                        <td class="catch">
+                            ${pokemon.catch}
+                        </td>
                     `;
+                    const catch_src = `./static/img/location/${pokemon.name}.png`
+                    fetch(catch_src)
+                        .then(
+                            () => {
+                                const catchTr = tr.querySelector("td.catch");
+                                const catchImg = document.createElement("img");
+                                catchImg.src = catch_src;
+                                catchImg.alt = pokemon.name + " 포획장소";
+                                catchTr.loding = "lazy";
+                                catchTr.insertBefore(document.createAttribute("br"), catchTr.firstChild);
+                                catchTr.insertBefore(catchImg, catchTr.firstChild);
+                            },
+                            () => { }
+                        )
                     tbody.appendChild(tr);
                 });
         })
-    .then(
-        () => {
-    const trs = document.querySelectorAll("tbody tr")
-    let foldings_ls = localStorage.getItem("paldea"),
-    /** @type {boolean[]} foldings */
-    foldings = [];
-    if (foldings_ls) {
-        foldings = JSON.parse(foldings_ls);
-        foldings.forEach(
-            (folding, i) => {
-                if (folding) {
-                    trs[i].classList.add("fold");
+        .then(
+            () => {
+                const trs = document.querySelectorAll("tbody tr")
+                let foldings_ls = localStorage.getItem("paldea"),
+                    /** @type {boolean[]} foldings */
+                    foldings = [];
+                if (foldings_ls) {
+                    foldings = JSON.parse(foldings_ls);
+                    foldings.forEach(
+                        (folding, i) => {
+                            if (folding) {
+                                trs[i].classList.add("fold");
+                            }
+                        });
+                } else {
+                    foldings = new Array(trs.length).fill(false);
                 }
+                trs.forEach(
+                    (tr, i) => {
+                        tr.addEventListener("click", () => {
+                            tr.classList.toggle("fold");
+                            foldings[i] = !foldings[i];
+                            localStorage.setItem("paldea", JSON.stringify(foldings));
+                        });
+                    });
             });
-    } else {
-        foldings = new Array(trs.length).fill(false);
-    }
-    trs.forEach(
-        (tr, i) => {
-            tr.addEventListener("click", () => {
-                tr.classList.toggle("fold");
-                foldings[i] = !foldings[i];
-                localStorage.setItem("paldea", JSON.stringify(foldings));
-            });
-    });
-});
 </script>
