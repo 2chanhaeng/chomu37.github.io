@@ -1,0 +1,89 @@
+<style>
+    img {
+        width: 100%;
+    }
+
+    tr.fold td:nth-child(2) *,
+    tr.fold td:nth-child(4) {
+        display: none;
+    }
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+tr.fold {
+    height: 1em;
+    background-color: #888;
+}
+.fixed {
+    word-break: keep-all;
+}
+
+</style>
+<table>
+    <thead>
+        <tr>
+            <th>No.</th>
+            <th>사진</th>
+            <th class="fixed">포켓몬</th>
+            <th>포획/진화</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+<script>
+    fetch("./static/pokedex.json")
+        .then(res => res.json())
+        .then(pokedex => {
+            const tbody = document.querySelector("tbody");
+            pokedex.forEach(
+                (pokemon, i) => {
+                    console.log(pokemon);
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td>${i + 1}</td>
+                        <td>
+                            <a href="https://pokemondb.net/pokedex/${pokemon.eng}">
+                                <img
+                                    alt="${pokemon.name}"
+                                    loading=lazy
+                                    src="https://img.pokemondb.net/sprites/sword-shield/normal/${pokemon.eng}.png"
+                                />
+                            </a>
+                        </td>
+                        <td class="fixed">${pokemon.name}</td>
+                        <td>${pokemon.catch}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+        })
+    .then(
+        () => {
+            const trs = document.querySelectorAll("tbody tr")
+            let foldings_ls = localStorage.getItem("galar"),
+            /** @type {boolean[]} foldings */
+            foldings = [];
+            if (foldings_ls) {
+                foldings = JSON.parse(foldings_ls);
+                foldings.forEach(
+                    (folding, i) => {
+                        if (folding) {
+                            trs[i].classList.add("fold");
+                        }
+                    });
+            } else {
+                foldings = new Array(trs.length).fill(false);
+            }
+            trs.forEach(
+                (tr, i) => {
+                    tr.addEventListener("click", () => {
+                        tr.classList.toggle("fold");
+                        foldings[i] = !foldings[i];
+                        localStorage.setItem("galar", JSON.stringify(foldings));
+                    });
+            });
+        }
+    );
+    
+</script>
