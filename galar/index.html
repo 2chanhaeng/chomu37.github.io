@@ -7,18 +7,24 @@
     tr.fold td:nth-child(4) {
         display: none;
     }
+
+    tr td:nth-child(1),
+    tr td:nth-child(3) {
+        font-size: xx-large;
+    }
+
     tr:nth-child(even) {
         background-color: #f2f2f2;
     }
 
-tr.fold {
-    height: 1em;
-    background-color: #888;
-}
-.fixed {
-    word-break: keep-all;
-}
+    tr.fold {
+        height: 1em;
+        background-color: #888;
+    }
 
+    .fixed {
+        word-break: keep-all;
+    }
 </style>
 <table>
     <thead>
@@ -33,15 +39,18 @@ tr.fold {
     </tbody>
 </table>
 <script>
-    fetch("./static/pokedex.json")
-        .then(res => res.json())
-        .then(pokedex => {
-            const tbody = document.querySelector("tbody");
-            pokedex.forEach(
-                (pokemon, i) => {
-                    console.log(pokemon);
-                    const tr = document.createElement("tr");
-                    tr.innerHTML = `
+    async function getPokedex() {
+        const res = await fetch("./static/json/pokedex.json");
+        return await res.json();
+    }
+    async function fillTable() {
+        const pokedex = await getPokedex();
+        const tbody = document.querySelector("tbody");
+        pokedex.forEach(
+            (pokemon, i) => {
+                console.log(pokemon);
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
                         <td>${i + 1}</td>
                         <td>
                             <a href="https://pokemondb.net/pokedex/${pokemon.eng}">
@@ -55,35 +64,37 @@ tr.fold {
                         <td class="fixed">${pokemon.name}</td>
                         <td>${pokemon.catch}</td>
                     `;
-                    tbody.appendChild(tr);
-                });
-        })
-    .then(
-        () => {
-            const trs = document.querySelectorAll("tbody tr")
-            let foldings_ls = localStorage.getItem("galar"),
+                tbody.appendChild(tr);
+            });
+    }
+    async function addEventListners() {
+        const trs = document.querySelectorAll("tbody tr")
+        let foldings_ls = localStorage.getItem("galar"),
             /** @type {boolean[]} foldings */
             foldings = [];
-            if (foldings_ls) {
-                foldings = JSON.parse(foldings_ls);
-                foldings.forEach(
-                    (folding, i) => {
-                        if (folding) {
-                            trs[i].classList.add("fold");
-                        }
-                    });
-            } else {
-                foldings = new Array(trs.length).fill(false);
-            }
-            trs.forEach(
-                (tr, i) => {
-                    tr.addEventListener("click", () => {
-                        tr.classList.toggle("fold");
-                        foldings[i] = !foldings[i];
-                        localStorage.setItem("galar", JSON.stringify(foldings));
-                    });
-            });
+        if (foldings_ls) {
+            foldings = JSON.parse(foldings_ls);
+            foldings.forEach(
+                (folding, i) => {
+                    if (folding) {
+                        trs[i].classList.add("fold");
+                    }
+                });
+        } else {
+            foldings = new Array(trs.length).fill(false);
         }
-    );
-    
+        trs.forEach(
+            (tr, i) => {
+                tr.addEventListener("click", () => {
+                    tr.classList.toggle("fold");
+                    foldings[i] = !foldings[i];
+                    localStorage.setItem("galar", JSON.stringify(foldings));
+                });
+            });
+    }
+    async function main() {
+        await fillTable();
+        await addEventListners();
+    }
+    main();
 </script>
