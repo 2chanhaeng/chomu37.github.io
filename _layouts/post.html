@@ -1,5 +1,6 @@
 ---
-# Copyright (c) 2017 Florian Klampfer <https://qwtel.com/>
+# Copyright (c) 2017 Florian Klampfer
+<https: //qwtel.com />
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -26,14 +27,18 @@ layout: base
 
 <hr class="dingbat related" />
 
+<script src="https://utteranc.es/client.js" repo="[ENTER REPO HERE]" issue-term="pathname" theme="github-dark"
+  crossorigin="anonymous" async>
+</script>
+
 {% assign addons = site.hydejack.post_addons %}
 {% unless addons %}{% assign addons = "about,newsletter,related,random" | split:"," %}{% endunless %}
 {% for addon in addons %}
-  {% case addon %}
-  {% when 'about' %}
-     {% include about.html %}
-  {% when 'related' %}
-    {% include related-posts.html post=post %}
-  {% else %}
-  {% endcase %}
+{% case addon %}
+{% when 'about' %}
+{% include about.html %}
+{% when 'related' %}
+{% include related-posts.html post=post %}
+{% else %}
+{% endcase %}
 {% endfor %}
