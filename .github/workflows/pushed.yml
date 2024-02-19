@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Upload Post
         run: |
+          git config --global user.email "2chanhaeng@gmail.com"
+          git config --global user.name "Auto Post Sync"
           git clone https://2chanhaeng:${{ secrets.pat }}@github.com/2chanhaeng/chomu37.github.io.git
           cd chomu37.github.io
           git remote add posts https://2chanhaeng:${{ secrets.pat }}@github.com/2chanhaeng/blog-posts.git
