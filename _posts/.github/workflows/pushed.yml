@@ -1,4 +1,4 @@
-name: Trigger Target Workflow
+name: Upload Post
 
 on:
   push:
@@ -9,10 +9,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Trigger Workflow in Another Repository
+      - name: Upload Post
         run: |
-        curl -H "Accept: application/vnd.github.everest-preview+json" \
-        -H "Authorization: token ${{ secrets.pat }}" \
-        --request POST \
-        --data '{"event_type": "post_uploaded", "client_payload": {}}' \
-        https://api.github.com/repos/2chanhaeng/chomu37.github.io/dispatches
+          git config --global user.email "2chanhaeng@gmail.com"
+          git config --global user.name "Auto Post Sync"
+          git clone https://2chanhaeng:${{ secrets.pat }}@github.com/2chanhaeng/chomu37.github.io.git
+          cd chomu37.github.io
+          git remote add posts https://2chanhaeng:${{ secrets.pat }}@github.com/2chanhaeng/blog-posts.git
+          git subtree pull --prefix=_posts posts main -m "post uploaded"
+          git push origin main
