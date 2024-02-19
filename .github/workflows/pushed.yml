@@ -17,4 +17,4 @@ jobs:
           cd chomu37.github.io
           git remote add posts https://2chanhaeng:${{ secrets.pat }}@github.com/2chanhaeng/blog-posts.git
           git subtree pull --prefix=_posts posts main -m "post uploaded"
-          git pull origin main
+          git push origin main
